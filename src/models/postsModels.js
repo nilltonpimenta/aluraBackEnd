@@ -15,3 +15,9 @@ export async function getTodosPosts() {
     return colecao.find().toArray();
     // Retorna todos os documentos da coleção como um array.
 }
+
+export async function criarPost(novoPost) {
+    const db = conexao.db("imersao-instabytes");
+    const colecao = db.collection("posts");
+    return colecao.insertOne(novoPost);
+}
