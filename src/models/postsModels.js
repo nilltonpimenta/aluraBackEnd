@@ -17,7 +17,8 @@ export async function getTodosPosts() {
 }
 
 export async function criarPost(novoPost) {
-    const db = conexao.db("imersao-instabytes");
-    const colecao = db.collection("posts");
-    return colecao.insertOne(novoPost);
+    // Cria um novo post no banco de dados
+    const db = conexao.db("imersao-instabytes"); // Conecta ao banco de dados
+    const colecao = db.collection("posts"); // Seleciona a coleção de posts
+    return colecao.insertOne(novoPost); // Insere o novo post na coleção
 }

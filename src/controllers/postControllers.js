@@ -23,18 +23,22 @@ export async function postarNovoPost(requisicao, resposta) {
 }
 
 export async function uploadImagem(requisicao, resposta) {
+    // Cria um novo objeto de post com informações básicas
     const novoPost = {
-        descricao: "",
-        imagemURL: requisicao.file.originalname,
-        alt: "",
+        descricao: "", // Descrição do post (pode ser preenchida posteriormente)
+        imagemURL: requisicao.file.originalname, // Nome original do arquivo da imagem
+        alt: "", // Texto alternativo para a imagem (descrição para acessibilidade)
     };
+
+    // Tenta realizar o upload da imagem e criar o post
     try {
-        const postCriado = await criarPost(novoPost);
-        const imagemAtualizada = `uploads/${postCriado.insertedId}.jpg`;
-        fs.renameSync(requisicao.file.path, imagemAtualizada);
-        resposta.status(200).json(postCriado);
+        const postCriado = await criarPost(novoPost); // Cria o post no banco de dados
+        const imagemAtualizada = `uploads/${postCriado.insertedId}.jpg`; // Gera o novo nome da imagem
+        fs.renameSync(requisicao.file.path, imagemAtualizada); // Renomeia a imagem com o novo nome
+        resposta.status(200).json(postCriado); // Retorna o post criado com sucesso
     } catch (error) {
-        console.error(error.message);
-        resposta.status(500).json({ Erro: "Falha na requisição" });
+        // Captura qualquer erro que possa ocorrer durante o processo
+        console.error(error.message); // Imprime a mensagem de erro no console
+        resposta.status(500).json({ Erro: "Falha na requisição" }); // Retorna uma mensagem de erro para o cliente
     }
 }
